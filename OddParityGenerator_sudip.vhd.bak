@@ -1,0 +1,22 @@
+library IEEE;                                                                                            Truth Table:
+use IEEE.STD_LOGIC_1164.ALL;
+entity OddParityGenerator_sudip is
+    Port (
+       data_in: in std_logic_vector (7 downto 0);
+       parity_out: out std_logic
+    );
+end OddParityGenerator_sudip;
+architecture Behavioral of OddParityGenerator_sudip is
+begin
+    process (data_in)
+        variable parity: std_logic;
+    begin
+        parity := data_in(0);
+        for i in 1 to 7 loop
+            parity := parity xor data_in(i);
+        end loop;
+        parity_out <= not parity;
+    end process;
+
+end Behavioral;
+
