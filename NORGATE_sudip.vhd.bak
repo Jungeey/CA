@@ -1,0 +1,14 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity NORGATE_sudip is
+    Port (
+        A: in STD_LOGIC;
+        B: in STD_LOGIC;
+        Y: out STD_LOGIC
+ );
+end NORGATE_sudip;
+architecture Behavioral of NORGATE_sudip is
+begin
+    Y <= not ( A or B); 
+end Behavioral;
