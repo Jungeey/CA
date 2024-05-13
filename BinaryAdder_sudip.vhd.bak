@@ -1,0 +1,32 @@
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity  BinaryAdder_sudip is
+    port (
+        A, B : in  std_logic_vector(3 downto 0); -- 4-bit input vectors
+        Sum : out std_logic_vector(3 downto 0); -- 4-bit output vector for sum
+        CarryOut : out std_logic                 -- Carry-out bit
+    );
+end BinaryAdder_sudip;
+
+architecture Behavioral of BinaryAdder_sudip is
+
+begin
+    process (A, B)
+variable temp_sum : std_logic_vector(3 downto 0);
+        variable carry : std_logic := '0'; -- Initial carry-in is 0
+    begin
+        -- Perform binary addition
+        for i in 0 to 3 loop
+            temp_sum(i) := A(i) xor B(i) xor carry; -- XOR of A, B, and carry
+            carry := (A(i) and B(i)) or (A(i) and carry) or (B(i) and carry); -- Calculate carry
+        end loop;
+        
+        -- Assign sum output
+        Sum <= temp_sum;
+        
+        -- Assign carry-out
+        CarryOut <= carry;
+    end process;
+end Behavioral;
