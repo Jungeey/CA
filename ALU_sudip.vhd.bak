@@ -1,0 +1,38 @@
+architecture Behavioral of ALU_sudip is
+    variable temp_result: unsigned (3 downto 0);
+    variable is_zero: boolean := true;
+begin
+    process (A, B, Op)
+    begin
+        case Op is
+            when "000" => -- Addition
+                temp_result := unsigned(A) + unsigned(B);
+            when "001" => -- Subtraction
+                temp_result := unsigned(A) - unsigned(B);
+            when "010" => -- Bitwise AND
+                temp_result := unsigned(A) and unsigned(B);
+            when "011" => -- Bitwise OR
+                temp_result := unsigned(A) or unsigned(B);
+            when "100" => -- Bitwise XOR
+                temp_result := unsigned(A) xor unsigned(B);
+            when others => -- Default case
+                temp_result := (others => 'X'); -- Undefined operation
+        end case;
+        
+        Result <= std_logic_vector(temp_result); -- Convert result to std_logic_vector
+    end process;
+
+    -- Check if the result is zero
+    process (temp_result)
+    begin
+        for i in temp_result'range loop
+            if temp_result(i) /= '0' then
+                is_zero := false;
+                exit; -- Exit loop early if non-zero element found
+            end if;
+        end loop;
+    end process;
+
+    Zero <= '1' when is_zero else '0'; -- Set Zero flag based on is_zero variable
+end architecture Behavioral;
+
