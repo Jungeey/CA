@@ -1,1 +1,24 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
+entity SOverFlow_sudip is
+    Port ( A : in  std_logic_vector(3 downto 0);
+           B : in  std_logic_vector(3 downto 0);
+           Overflow : out  std_logic);
+end SOverFlow_sudip;
+
+architecture Behavioral of SOverFlow_sudip is
+begin
+    process (A, B)
+        variable sum : signed(4 downto 0);
+    begin
+        sum := signed('0' & A) + signed('0' & B);
+
+        if (sum(sum'high) /= sum(sum'high-1)) then
+            Overflow <= '1';  -- Overflow occurred
+        else
+            Overflow <= '0';  -- No overflow
+        end if;
+    end process;
+end Behavioral;
